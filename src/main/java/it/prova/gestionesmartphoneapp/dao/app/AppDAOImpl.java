@@ -51,6 +51,13 @@ public class AppDAOImpl implements AppDAO  {
 		entityManager.remove(entityManager.merge(input));
 		
 	}
+
+	@Override
+	public void disassociaAppDaTelefono(Long idApp) throws Exception {
+		// TODO Auto-generated method stub
+		entityManager.createNativeQuery("delete from smartphone_app where app_id=?1").
+		setParameter(1, idApp).executeUpdate();
+	}
 	
 	
 }

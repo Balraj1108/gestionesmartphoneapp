@@ -15,7 +15,9 @@ public interface AppService {
 	
 	public void insert(App appInstance) throws Exception;
 	
-	public void delete(App appInstance) throws Exception;
+	public void delete(Long idApp) throws Exception;
+	
+	public void disassociaAppDaTelefono(Long idApp) throws Exception;
 
 	
 	

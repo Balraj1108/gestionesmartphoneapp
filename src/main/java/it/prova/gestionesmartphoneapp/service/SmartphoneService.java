@@ -3,7 +3,9 @@ package it.prova.gestionesmartphoneapp.service;
 import java.util.List;
 
 import it.prova.gestionesmartphoneapp.dao.smartphone.SmartphoneDAO;
+import it.prova.gestionesmartphoneapp.model.App;
 import it.prova.gestionesmartphoneapp.model.Smartphone;
+
 
 public interface SmartphoneService {
 
@@ -16,7 +18,9 @@ public interface SmartphoneService {
 	
 	public void insert(Smartphone smartphoneInstance) throws Exception;
 	
-	public void delete(Smartphone smartphoneInstance) throws Exception;
+	public void delete(Long idSmartphone) throws Exception;
+	
+	public void aggiungiApp(Smartphone smartphoneInstance, App appInstance) throws Exception;
 
 	
 	

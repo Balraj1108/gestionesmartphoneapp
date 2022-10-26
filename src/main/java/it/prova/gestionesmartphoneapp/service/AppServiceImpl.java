@@ -115,7 +115,7 @@ public class AppServiceImpl implements AppService {
 
 
 	@Override
-	public void delete(App appInstance) throws Exception {
+	public void delete(Long idApp) throws Exception {
 		// questo è come una connection
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
@@ -127,7 +127,34 @@ public class AppServiceImpl implements AppService {
 			appDAO.setEntityManager(entityManager);
 
 			// eseguo quello che realmente devo fare
-			appDAO.delete(appInstance);
+			appDAO.delete(appDAO.get(idApp));
+
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
+		
+	}
+
+
+	@Override
+	public void disassociaAppDaTelefono(Long idApp) throws Exception {
+		// questo è come una connection
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+
+		try {
+			// questo è come il MyConnection.getConnection()
+			entityManager.getTransaction().begin();
+
+			// uso l'injection per il dao
+			appDAO.setEntityManager(entityManager);
+
+			// eseguo quello che realmente devo fare
+			appDAO.disassociaAppDaTelefono(idApp);
 
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
