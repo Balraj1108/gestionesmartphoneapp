@@ -33,9 +33,7 @@ public class MyTest {
 			
 			testEliminaApp(smartphoneServiceInstance, appServiceInstance);
 			
-			
-			
-			
+			testRimuoviAppDaTelefono(smartphoneServiceInstance, appServiceInstance);
 			
 			
 		} catch (Exception e) {
@@ -214,6 +212,41 @@ public class MyTest {
 		appServiceInstance.delete(appTest.getId());
 		
 		System.out.println(".......testEliminaApp fine: PASSED.............");
+	}
+	
+	private static void testRimuoviAppDaTelefono(SmartphoneService smartphoneServiceInstance,
+			AppService appServiceInstance ) throws Exception{
+		
+		System.out.println(".......testRimuoviAppDaTelefono inizio.............");
+		
+		Smartphone smartphoneTest = new Smartphone("huawei", "P20pro", 1500, "android15");
+		smartphoneServiceInstance.insert(smartphoneTest);
+		
+		Date dateInstallazioneTest = new SimpleDateFormat("dd/MM/yyyy").parse("12/01/2020");
+		Date dateAggiornamentoTest = new SimpleDateFormat("dd/MM/yyyy").parse("25/10/2021");
+		
+		App appTest = new App("youtube", dateInstallazioneTest, dateAggiornamentoTest, "2.8");
+		appServiceInstance.insert(appTest);		
+		
+		smartphoneServiceInstance.aggiungiApp(smartphoneTest, appTest);
+		
+		smartphoneTest = smartphoneServiceInstance.caricaSingoloElementoEagerApps(smartphoneTest.getId());
+		
+		
+		//smartphoneServiceInstance.delete(smartphoneTest.getId());
+		smartphoneServiceInstance.rimuoviAppDaTelefono(smartphoneTest, appTest);
+		
+		Smartphone smartphoneTestControlloDisassociaApp = smartphoneServiceInstance
+				.caricaSingoloElementoEagerApps(smartphoneTest.getId());
+		if (smartphoneTestControlloDisassociaApp.getApps().size() != 0) {
+			throw new RuntimeException("Test Fallito: disassociamentoApp");
+		}
+		
+		appServiceInstance.delete(appTest.getId());
+		smartphoneServiceInstance.delete(smartphoneTest.getId());
+		
+		
+		System.out.println(".......testRimuoviAppDaTelefono fine: PASSED.............");
 	}
 
 }

@@ -18,6 +18,8 @@ public interface AppService {
 	public void delete(Long idApp) throws Exception;
 	
 	public void disassociaAppDaTelefono(Long idApp) throws Exception;
+	
+	
 
 	
 	
