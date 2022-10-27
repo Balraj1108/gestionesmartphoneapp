@@ -21,6 +21,8 @@ public interface SmartphoneService {
 	public void delete(Long idSmartphone) throws Exception;
 	
 	public void aggiungiApp(Smartphone smartphoneInstance, App appInstance) throws Exception;
+	
+	public Smartphone caricaSingoloElementoEagerApps(Long id) throws Exception;
 
 	
 	

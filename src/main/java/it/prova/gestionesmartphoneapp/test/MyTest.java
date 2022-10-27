@@ -38,11 +38,6 @@ public class MyTest {
 			
 			
 			
-			
-			
-			
-			
-			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -82,8 +77,8 @@ public class MyTest {
 		// questione di 10^-4 secondi
 		// soluzione: riprovare!!! Se diventa sistematico commentare le due righe
 		// successive
-		//if (!createDateTimeIniziale.equals(updateDateTimeIniziale))
-			//throw new RuntimeException("testAggiornamentoVersioneOS fallito: le date non coincidono ");
+		if (!createDateTimeIniziale.equals(updateDateTimeIniziale))
+			throw new RuntimeException("testAggiornamentoVersioneOS fallito: le date non coincidono ");
 		// **************************************************************************************************
 		// **************************************************************************************************
 
@@ -175,6 +170,13 @@ public class MyTest {
 		smartphoneServiceInstance.aggiungiApp(smartphoneTest, appTest);
 		smartphoneServiceInstance.aggiungiApp(smartphoneTest, appTest1);
 		
+		
+		// ricarico eager per forzare il test
+		Smartphone smartphoneReloaded = smartphoneServiceInstance.caricaSingoloElementoEagerApps(smartphoneTest.getId());
+		if (smartphoneReloaded.getApps().isEmpty())
+			throw new RuntimeException("testCreazioneECollegamentoCdInUnSoloColpo fallito: genere e cd non collegati ");
+		
+		
 		smartphoneServiceInstance.delete(smartphoneTest.getId());
 		appServiceInstance.delete(appTest.getId());
 		appServiceInstance.delete(appTest1.getId());
@@ -199,8 +201,16 @@ public class MyTest {
 		
 		smartphoneServiceInstance.aggiungiApp(smartphoneTest, appTest);
 		
+		
 		//smartphoneServiceInstance.delete(smartphoneTest.getId());
 		appServiceInstance.disassociaAppDaTelefono(appTest.getId());
+		
+		Smartphone smartphoneTestControlloDisassociaApp = smartphoneServiceInstance
+				.caricaSingoloElementoEagerApps(smartphoneTest.getId());
+		if (smartphoneTestControlloDisassociaApp.getApps().size() != 0) {
+			throw new RuntimeException("Test Fallito: disassociamentoApp");
+		}
+		
 		appServiceInstance.delete(appTest.getId());
 		
 		System.out.println(".......testEliminaApp fine: PASSED.............");

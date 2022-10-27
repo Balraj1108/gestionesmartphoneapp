@@ -7,4 +7,5 @@ public interface AppDAO extends IBaseDAO<App> {
 
 	public void disassociaAppDaTelefono(Long idApp) throws Exception;
 	
+	
 }
